@@ -4,196 +4,221 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hariom Enterprises</title>
+
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
-    body { display: flex; flex-direction: column; min-height: 100vh; background: #f5f5f5; }
-    header { display: flex; justify-content: space-between; align-items: center; background: #fff; padding: 10px 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
-    header .left { display: flex; align-items: center; gap: 20px; }
-    header img { width: 100px; }
-    header nav a { text-decoration: none; margin: 0 10px; color: #333; font-weight: 500; }
-    header nav a:hover { color: #007bff; }
-    header .right a { margin-left: 15px; text-decoration: none; color: #333; }
-    .store-time { font-weight: bold; color: green; }
+    /* ───────── Base reset ───────── */
+    *{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}
 
-    .offers { background: #ffcc00; padding: 10px; overflow: hidden; white-space: nowrap; font-weight: bold; }
-    .offers span { display: inline-block; animation: scroll 10s linear infinite; }
-    @keyframes scroll {
-      0% { transform: translateX(100%); }
-      100% { transform: translateX(-100%); }
+    /* ───────── Layout / Header ───────── */
+    body{display:flex;flex-direction:column;min-height:100vh;background:#f5f5f5}
+    header{display:flex;justify-content:space-between;align-items:center;background:#fff;
+      padding:10px 20px;box-shadow:0 2px 5px rgba(0,0,0,.1);position:sticky;top:0;z-index:1000}
+    .left{display:flex;align-items:center;gap:20px}
+    header nav a{margin:0 10px;text-decoration:none;color:#333;font-weight:500}
+    header nav a.active,header nav a:hover{color:#007bff}
+    .right a{margin-left:15px;text-decoration:none;color:#333}
+    .right span{font-weight:bold;color:green}
+
+    /* offer strip */
+    .offers{background:#ffcc00;padding:10px;white-space:nowrap;overflow:hidden;font-weight:bold}
+    @keyframes scroll{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
+    .offers span{display:inline-block;animation:scroll 10s linear infinite}
+
+    /* ───────── Sections & cards ───────── */
+    main{padding:1rem}
+    section{display:none;margin-bottom:2rem}
+    section.active{display:block}
+    h2{margin-bottom:10px;color:#222}
+
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem}
+    .card{background:#fff;padding:15px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.1);
+      text-align:center;display:flex;flex-direction:column;gap:.5rem}
+    .card img{max-width:100%;height:120px;object-fit:contain}
+
+    /* buttons & inputs */
+    button, input[type=number]{padding:8px 12px;border-radius:5px;border:1px solid #ccc;cursor:pointer}
+    .buy{background:#007bff;border:none;color:#fff}
+    .buy:hover{background:#0056b3}
+    .wish{background:#ffc107;border:none}
+    .wish:hover{background:#e0a800}
+    input[type=number]{width:70px;text-align:center}
+
+    /* contact form */
+    form input, form textarea{width:100%;padding:10px;margin:5px 0 10px;border:1px solid #ccc;border-radius:5px}
+    form button{background:#28a745;border:none;padding:10px 15px;color:#fff;border-radius:5px;cursor:pointer}
+
+    /* footer */
+    footer{text-align:center;padding:1rem;background:#222;color:#fff;margin-top:auto}
+
+    /* Responsive header stack */
+    @media(max-width:768px){
+      header{flex-direction:column;align-items:flex-start}
+      header nav{display:flex;flex-wrap:wrap}
     }
-
-    main { padding: 1rem; }
-    section { margin-bottom: 2rem; }
-    h2 { margin-bottom: 10px; color: #222; }
-
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; }
-    .card { background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-align: center; }
-
-    button { padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
-    button:hover { background: #0056b3; }
-
-    form input, form textarea {
-      width: 100%;
-      padding: 10px;
-      margin: 5px 0 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-
-    form button {
-      background: #28a745;
-      border: none;
-      padding: 10px 15px;
-      color: white;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .payment-icons img { height: 30px; margin: 0 10px; }
-
-    footer {
-      text-align: center;
-      padding: 1rem;
-      background: #222;
-      color: white;
-    }
-
-    @media (max-width: 768px) {
-      header { flex-direction: column; align-items: flex-start; }
-      header nav { display: flex; flex-wrap: wrap; }
-    }
-
-    .image{
-        width: 100px;
-    }
-    .image{
-        width: 100px;  
-    }
-    .acces{
-        width: 100px;
-    }
-    .tv{
-        width: 150px;
-    }
-    .washing{
-        width: 100px;
-    }.speaker{
-        width: 150px;
-    }.iphone{
-        width: 200px;
-    }.s24{
-        width: 200px; width: 350px;
-    }.one{
-        width: 200px;
-    }
-
   </style>
 </head>
 <body>
 
+<!-- ───────── HEADER / NAV ───────── -->
 <header>
   <div class="left">
-    <img src="Images/\Hariom Enterprises.jpg" />
-    <nav>
-      <a href="#home">Home</a>
-      <a href="#about">About Us</a>
-      <a href="#branches">Branches</a>
-      <a href="#mobiles">Mobiles</a>
-      <a href="#accessories">Accessories</a>
-      <a href="#contact">Contact</a>
+    <img src="Images/Hariom Enterprises.jpg" alt="Hariom logo" style="width:100px"/>
+    <nav id="nav">
+      <a href="#home"        data-target="home"       class="active">Home</a>
+      <a href="#about"       data-target="about">About&nbsp;Us</a>
+      <a href="#branches"    data-target="branches">Branches</a>
+      <a href="#mobiles"     data-target="mobiles">Mobiles</a>
+      <a href="#accessories" data-target="accessories">Accessories</a>
+      <a href="#contact"     data-target="contact">Contact</a>
     </nav>
   </div>
   <div class="right">
-    <span class="store-time">🕒 10 AM - 9 PM</span>
+    <span>🕒 10&nbsp;AM – 9&nbsp;PM</span>
     <a href="#">Cart</a>
     <a href="#">Wishlist</a>
     <a href="#">Login</a>
   </div>
 </header>
 
-<div class="offers"><span>🔥 Special Offers: Flat ₹100 OFF | No Cost EMI | Free Accessories on Mobiles 🔥</span></div>
+<!-- ───────── OFFER STRIP ───────── -->
+<div class="offers">
+  <span>🔥 Special Offers: Flat ₹100 OFF | No-Cost EMI | Free Accessories on Mobiles 🔥</span>
+</div>
 
+<!-- ───────── MAIN CONTENT ───────── -->
 <main>
-  <section id="home">
+  <!-- HOME -->
+  <section id="home" class="active">
     <h2>Top Categories</h2>
     <div class="grid">
-      <div class="card"> <img src="Images/\Phone.jpg" alt="" class="image"> <br> Mobiles</div>
-      <div class="card"> <img src="Images/\acces.webp" alt= "" class="acces"> <br> Accessories </div>
-      <div class="card"> <img src="Images/\TV.avif" alt= "" class="tv"> <br> Smart TV</div>
-      <div class="card"> <img src="Images/\Fridge.jpg" alt="" class="image"> <br> Fridge</div>
-      <div class="card"> <img src="Images/\washing.jpg" alt="" class="washing"> <br> Washing Machine</div>
-      <div class="card"> <img src="Images/\Speaker.jpg" alt="" class="speaker"> <br> Speakers</div>
+      <div class="card"><img src="Images/Phone.jpg"  class="image" alt=""><br>Mobiles</div>
+      <div class="card"><img src="Images/acces.webp" class="acces" alt=""><br>Accessories</div>
+      <div class="card"><img src="Images/TV.avif"    class="tv" alt=""><br>Smart&nbsp;TV</div>
+      <div class="card"><img src="Images/Fridge.jpg" class="image" alt=""><br>Fridge</div>
+      <div class="card"><img src="Images/washing.jpg"class="washing" alt=""><br>Washing&nbsp;Machine</div>
+      <div class="card"><img src="Images/Speaker.jpg"class="speaker" alt=""><br>Speakers</div>
     </div>
   </section>
 
+  <!-- ABOUT -->
+  <section id="about">
+    <h2>About Us</h2>
+    <p>Hariom Enterprises is your one-stop shop for mobiles, electronics and accessories with unbeatable
+       pricing and Exiting Offers and trusted service since 2020.</p>
+  </section>
+
+  <!-- BRANCHES -->
+  <section id="branches">
+    <h2>Our Branches</h2>
+    <ul>
+      <li>Rarhi&nbsp;(Main&nbsp;Showroom)</li>
+      <li>Jale</li>
+    
+    </ul>
+  </section>
+
+  <!-- MOBILES -->
   <section id="mobiles">
-    <h2>New Arrivals</h2>
+    <h2>Latest Mobiles</h2>
     <div class="grid">
-      <div class="card"> <img src="Images/\Phone.jpg" alt="" class="iphone"> <br> Iphone 16 Pro Max</div>
-      <div class="card"> <img src="Images/\product_color_pinkGold_PC.png" alt="" class="s24"> <br> Samsung Galaxy S25 Series</div>
-      <div class="card"> <img src="Images/\shopping.webp"alt=""class="one"> <br> One Plus 12R</div>
+
+      <!-- Product 1 -->
+      <div class="card">
+        <img src="Images/iphone.jpg" alt="iPhone 16 Pro Max">
+        <strong>iPhone 16 Pro Max</strong>
+        <span>₹1,49,999</span>
+        <label>Qty: <input type="number" min="1" value="1"></label>
+        <button class="buy"  onclick="buyNow(this)">Buy Now</button>
+        <button class="wish" onclick="addWish(this)">♡ Wishlist</button>
+      </div>
+
+      <!-- Product 2 -->
+      <div class="card">
+        <img src="Images/s24.png" alt="Samsung Galaxy S25">
+        <strong>Samsung Galaxy S25</strong>
+        <span>₹1,09,999</span>
+        <label>Qty: <input type="number" min="1" value="1"></label>
+        <button class="buy"  onclick="buyNow(this)">Buy Now</button>
+        <button class="wish" onclick="addWish(this)">♡ Wishlist</button>
+      </div>
+
+      <!-- Product 3 -->
+      <div class="card">
+        <img src="Images/oneplus.webp" alt="OnePlus 12R">
+        <strong>OnePlus 12R</strong>
+        <span>₹39,999</span>
+        <label>Qty: <input type="number" min="1" value="1"></label>
+        <button class="buy"  onclick="buyNow(this)">Buy Now</button>
+        <button class="wish" onclick="addWish(this)">♡ Wishlist</button>
+      </div>
+
     </div>
-    <br />
-    <button onclick="alert('Redirecting to all products...')">View All Products</button>
   </section>
 
-  <section id="blog">
-    <h2>Our Blog</h2>
-    <p>Latest trends in mobile technology, accessory hacks, smart TV buying guides and more – coming soon!</p>
+  <!-- ACCESSORIES (placeholder) -->
+  <section id="accessories">
+    <h2>Accessories</h2>
+    <p>Coming soon …</p>
   </section>
 
-  <section id="testimonial">
-    <h2>Testimonials</h2>
-    <div class="grid">
-      <div class="card">"Excellent service & quick delivery!" - Neha Pethakar Rarhi (Bihar)</div>
-      <div class="card">"Trusted shop for best mobile deals." - Karn Pandey (Bihar)</div>
-    </div>
-  </section
-  <section id="features">
-    <h2>Payment Methods</h2>
-    <div class="payment-icons">
-      <img src="Images/\UPI-image.jpg" alt="UPI"/>
-      <img src="https://img.icons8.com/color/48/visa.png" alt="Visa"/>
-      <img src="https://img.icons8.com/color/48/mastercard-logo.png" alt="Mastercard"/>
-      <img src="https://img.icons8.com/color/48/rupay.png" alt="Rupay"/>
-      <img src="https://img.icons8.com/ios-filled/50/cash-in-hand.png" alt="Cash"/>
-    </div>
-  </section>
-
+  <!-- CONTACT -->
   <section id="contact">
     <h2>Contact Us</h2>
     <form onsubmit="submitForm(event)">
-      <input type="text" placeholder="Your Name" required />
-      <input type="email" placeholder="Your Email" required />
-      <input type="tel" placeholder="Contact Number" required />
-      <textarea rows="3" placeholder="Your Message" required></textarea>
-      <input type="text" id="location" placeholder="Detecting your location..." readonly />
+      <input type="text"  placeholder="Your Name"   required>
+      <input type="email" placeholder="Your Email"  required>
+      <input type="tel"   placeholder="Contact No." required>
+      <textarea rows="3"  placeholder="Your Message" required></textarea>
+      <input type="text" id="location" placeholder="Detecting your location…" readonly>
       <button type="submit">Submit</button>
     </form>
   </section>
 </main>
 
-<footer>
-  © Hariom Mobile - All Rights Reserved
-</footer>
+<!-- ───────── FOOTER ───────── -->
+<footer>© Hariom Mobile – All Rights Reserved</footer>
 
+<!-- ───────── JS LOGIC ───────── -->
 <script>
-  // IP-based location detection
-  fetch('https://ipapi.co/json')
-    .then(res => res.json())
-    .then(data => {
-      document.getElementById('location').value =
-        `${data.city}, ${data.region}, ${data.country_name}`;
-    })
-    .catch(() => {
-      document.getElementById('location').value = 'Bihar';
-    });
-
-  function submitForm(e) {
+/* ---------- Mini Router ---------- */
+document.querySelectorAll('#nav a').forEach(link=>{
+  link.addEventListener('click',e=>{
     e.preventDefault();
-    alert("Thank you for contacting Hariom Enterprises!");
-  }
-</script>
+    // highlight nav
+    document.querySelectorAll('#nav a').forEach(l=>l.classList.remove('active'));
+    link.classList.add('active');
+    // show target section
+    const tgt = link.dataset.target;
+    document.querySelectorAll('main section').forEach(s=>{
+      s.classList.toggle('active', s.id === tgt);
+    });
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
 
+/* ---------- Buy / Wishlist demo ---------- */
+function buyNow(btn){
+  const card = btn.closest('.card');
+  const name = card.querySelector('strong').innerText;
+  const qty  = card.querySelector('input[type=number]').value;
+  alert(`Added ${qty} × ${name} to cart!`);
+}
+function addWish(btn){
+  const name = btn.closest('.card').querySelector('strong').innerText;
+  alert(`${name} saved to wishlist!`);
+}
+
+/* ---------- IP-based location ---------- */
+fetch('https://ipapi.co/json').then(r=>r.json()).then(d=>{
+  const loc = document.getElementById('location');
+  if(loc) loc.value = `${d.city}, ${d.region}, ${d.country_name}`;
+}).catch(()=>{const loc=document.getElementById('location');if(loc)loc.value='Bihar'});
+
+/* ---------- Contact form ---------- */
+function submitForm(e){
+  e.preventDefault();
+  alert('Thank you for contacting Hariom Enterprises!');
+}
+</script>
 </body>
 </html>
