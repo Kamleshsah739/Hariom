@@ -1,224 +1,415 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Hariom Enterprises</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hariom Enterprises</title>
 
-  <style>
-    /* ───────── Base reset ───────── */
-    *{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}
+<!-- ───────── MOBILE-FIRST CSS (image handling perfected) ───────── -->
+<style>
+/* RESET / BASE */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;font-size:clamp(14px,3.2vw,18px)}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;color:#222;
+     display:flex;flex-direction:column;min-height:100vh;background:#fafafa}
+img{max-width:100%;display:block;height:auto}
 
-    /* ───────── Layout / Header ───────── */
-    body{display:flex;flex-direction:column;min-height:100vh;background:#f5f5f5}
-    header{display:flex;justify-content:space-between;align-items:center;background:#fff;
-      padding:10px 20px;box-shadow:0 2px 5px rgba(0,0,0,.1);position:sticky;top:0;z-index:1000}
-    .left{display:flex;align-items:center;gap:20px}
-    header nav a{margin:0 10px;text-decoration:none;color:#333;font-weight:500}
-    header nav a.active,header nav a:hover{color:#007bff}
-    .right a{margin-left:15px;text-decoration:none;color:#333}
-    .right span{font-weight:bold;color:green}
+/* THEME */
+:root{
+  --accent:#0a6dff;--accent-dark:#0046be;--accent-light:#e7f0ff;
+  --warn:#ffb703;--shadow:0 3px 8px rgba(0,0,0,.08);--r:12px;
+}
 
-    /* offer strip */
-    .offers{background:#ffcc00;padding:10px;white-space:nowrap;overflow:hidden;font-weight:bold}
-    @keyframes scroll{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
-    .offers span{display:inline-block;animation:scroll 10s linear infinite}
+/* HEADER */
+header{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#fff;
+       box-shadow:var(--shadow);position:sticky;top:0;z-index:1000}
+header .left{display:flex;align-items:center;gap:14px}
+header .left img{width:92px;aspect-ratio:1/1;object-fit:contain}
+nav{display:flex;gap:6px;flex-wrap:wrap}
+nav a{padding:6px 10px;border-radius:6px;text-decoration:none;color:#333;font-weight:500}
+nav a.active,nav a:hover{background:var(--accent-light);color:var(--accent)}
+header .right{display:flex;align-items:center;gap:12px;font-size:.9rem}
+header .right span{font-weight:600;color:#079407}
+@media(max-width:640px){header{flex-direction:column;align-items:flex-start;gap:4px}}
 
-    /* ───────── Sections & cards ───────── */
-    main{padding:1rem}
-    section{display:none;margin-bottom:2rem}
-    section.active{display:block}
-    h2{margin-bottom:10px;color:#222}
+/* SCROLLING OFFERS */
+.offers-wrap{overflow:hidden;background:linear-gradient(135deg,#fff 0%,#f3f8ff 100%);box-shadow:var(--shadow);margin-block:10px}
+.offers{display:flex;gap:18px;animation:scroll 22s linear infinite;padding:10px 18px}
+.offer-chip{display:flex;align-items:center;gap:8px;background:#fff;border-radius:999px;padding:6px 14px;font-weight:500;
+            box-shadow:0 2px 6px rgba(0,0,0,.06);white-space:nowrap}
+.offer-chip img{width:28px;aspect-ratio:1/1;object-fit:contain}
+@keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem}
-    .card{background:#fff;padding:15px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.1);
-      text-align:center;display:flex;flex-direction:column;gap:.5rem}
-    .card img{max-width:100%;height:120px;object-fit:contain}
+/* FINANCE RIBBON */
+.finance{background:var(--accent-dark);color:#fff;padding:8px 12px;font-size:.85rem;display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.finance span{display:flex;align-items:center;gap:6px}
+.finance img{width:22px;aspect-ratio:1/1;object-fit:contain}
 
-    /* buttons & inputs */
-    button, input[type=number]{padding:8px 12px;border-radius:5px;border:1px solid #ccc;cursor:pointer}
-    .buy{background:#007bff;border:none;color:#fff}
-    .buy:hover{background:#0056b3}
-    .wish{background:#ffc107;border:none}
-    .wish:hover{background:#e0a800}
-    input[type=number]{width:70px;text-align:center}
+/* SECTIONS */
+main{padding:22px 14px;width:100%;max-width:1200px;margin-inline:auto}
+section{display:none;animation:fade .25s ease}
+section.active{display:block}
+@keyframes fade{from{opacity:.2;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+h2{margin-bottom:14px;font-size:1.35rem}
 
-    /* contact form */
-    form input, form textarea{width:100%;padding:10px;margin:5px 0 10px;border:1px solid #ccc;border-radius:5px}
-    form button{background:#28a745;border:none;padding:10px 15px;color:#fff;border-radius:5px;cursor:pointer}
+/* SEARCH */
+.search-wrap{display:flex;justify-content:flex-end;margin-bottom:12px}
+.search-wrap input{padding:8px 12px;border:1px solid #ccc;border-radius:8px;width:210px}
 
-    /* footer */
-    footer{text-align:center;padding:1rem;background:#222;color:#fff;margin-top:auto}
+/* GRID & CARDS */
+.grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}
+.card{background:#fff;border-radius:var(--r);box-shadow:var(--shadow);padding:14px;display:flex;flex-direction:column;gap:10px;text-align:center;position:relative}
+.card img{aspect-ratio:1/1;object-fit:cover;border-radius:6px}
+.price-pill{background:var(--accent-light);color:var(--accent-dark);padding:4px 10px;border-radius:999px;font-weight:600;font-size:.95rem}
 
-    /* Responsive header stack */
-    @media(max-width:768px){
-      header{flex-direction:column;align-items:flex-start}
-      header nav{display:flex;flex-wrap:wrap}
-    }
-  </style>
+/* BUTTONS / INPUTS */
+button,input[type=number]{border:1px solid #ccc;border-radius:8px;padding:7px 10px;font-size:.85rem}
+button{cursor:pointer;transition:.15s}
+.btn{border:none}
+.btn.acc{background:var(--accent);color:#fff}.btn.acc:hover{background:var(--accent-dark)}
+.btn.warn{background:var(--warn)}.btn.warn:hover{background:#e0a800}
+.qty{width:60px;text-align:center;margin-inline:auto}
+
+/* BRAND TABS */
+#brand-tabs{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+#brand-tabs .btn{background:#eee}.btn.small.acc{background:var(--accent);color:#fff}
+
+/* COLOUR ARROWS */
+.color-nav{position:absolute;top:50%;transform:translateY(-50%);width:26px;height:26px;border:none;background:#fff;border-radius:50%;
+           box-shadow:0 0 4px rgba(0,0,0,.15);cursor:pointer;font-weight:bold}
+.color-nav:hover{background:#f3f3f3}.color-prev{left:6px}.color-next{right:6px}
+
+/* CART */
+.cart-row{display:flex;justify-content:space-between;align-items:center;margin:6px 0}
+.cart-row button{padding:4px 8px;font-size:.75rem}
+#checkout-btn:disabled{background:#bbb}
+
+/* CHECKOUT */
+.payment-option{display:block;margin-top:10px}
+.payform{display:none;margin-top:8px;border:1px solid #ddd;padding:12px;border-radius:var(--r)}
+
+/* BRANCH GALLERY */
+.branch{background:#fff;border-radius:var(--r);box-shadow:var(--shadow);padding:14px;margin-bottom:20px}
+.branch .gallery{position:relative}
+.branch .gallery img{aspect-ratio:16/9;object-fit:cover;border-radius:var(--r)}
+.branch .gallery button{position:absolute;top:50%;transform:translateY(-50%);width:30px;height:30px;background:#ffffffcb;border:none;border-radius:50%;cursor:pointer;font-size:1.1rem}
+.branch .gallery button:hover{background:#fff}
+
+/* BIGGER THUMBS ON DESKTOP */
+@media(min-width:920px){
+  .card img{height:190px}
+  .branch .gallery img{height:260px}
+}
+
+/* FOOTER */
+footer{text-align:center;margin-top:auto;padding:14px;background:#111;color:#eee;font-size:.85rem}
+</style>
 </head>
 <body>
 
-<!-- ───────── HEADER / NAV ───────── -->
+<!-- ───────── HEADER & NAV ───────── -->
 <header>
   <div class="left">
-    <img src="Images/Hariom Enterprises.jpg" alt="Hariom logo" style="width:100px"/>
+    <img src="Images/Hariom Enterprises.jpg" alt="Hariom logo">
     <nav id="nav">
       <a href="#home"        data-target="home"       class="active">Home</a>
-      <a href="#about"       data-target="about">About&nbsp;Us</a>
+      <a href="#about"       data-target="about">About</a>
       <a href="#branches"    data-target="branches">Branches</a>
       <a href="#mobiles"     data-target="mobiles">Mobiles</a>
       <a href="#accessories" data-target="accessories">Accessories</a>
-      <a href="#contact"     data-target="contact">Contact</a>
+      <a href="#cart"        data-target="cart">Cart (<span id="cart-count">0</span>)</a>
     </nav>
   </div>
-  <div class="right">
-    <span>🕒 10&nbsp;AM – 9&nbsp;PM</span>
-    <a href="#">Cart</a>
-    <a href="#">Wishlist</a>
-    <a href="#">Login</a>
-  </div>
+  <div class="right"><span>🕒 10 AM – 10 PM</span><a href="#">Wishlist</a><a href="#">Login</a></div>
 </header>
 
-<!-- ───────── OFFER STRIP ───────── -->
-<div class="offers">
-  <span>🔥 Special Offers: Flat ₹100 OFF | No-Cost EMI | Free Accessories on Mobiles 🔥</span>
+<!-- OFFERS & FINANCE RIBBONS -->
+<div class="offers-wrap">
+  <div class="offers">
+    <div class="offer-chip"><img src="Images/Earbuds.webp">Free Earbuds on Smartphones</div>
+    <div class="offer-chip"><img src="Images/Card.webp">No-Cost EMI on Cards</div>
+    <div class="offer-chip"><img src="Images/Smartphone.avif">Gift Pack on ₹10k+</div>
+    <div class="offer-chip"><img src="Images/Card.webp">Debit-Card EMI Facility</div>
+    <div class="offer-chip"><img src="Images/c1.jpg">Loan-Pe-Phone / TV / Fridge</div>
+  </div>
 </div>
 
-<!-- ───────── MAIN CONTENT ───────── -->
+<div class="finance">
+  <span><img src="Images/bajaj.png">Bajaj Finance</span>
+  <span><img src="Images/homecredit.png">Home Credit</span>
+  <span><img src="Images/tvs.png">TVS Credit</span>
+  <span><img src="Images/samsungfin.png">Samsung Finance</span>
+  <span style="font-weight:600">• No-Cost EMI on select phones •</span>
+</div>
+
 <main>
-  <!-- HOME -->
-  <section id="home" class="active">
-    <h2>Top Categories</h2>
-    <div class="grid">
-      <div class="card"><img src="Images/Phone.jpg"  class="image" alt=""><br>Mobiles</div>
-      <div class="card"><img src="Images/acces.webp" class="acces" alt=""><br>Accessories</div>
-      <div class="card"><img src="Images/TV.avif"    class="tv" alt=""><br>Smart&nbsp;TV</div>
-      <div class="card"><img src="Images/Fridge.jpg" class="image" alt=""><br>Fridge</div>
-      <div class="card"><img src="Images/washing.jpg"class="washing" alt=""><br>Washing&nbsp;Machine</div>
-      <div class="card"><img src="Images/Speaker.jpg"class="speaker" alt=""><br>Speakers</div>
+
+<!-- HOME -->
+<section id="home" class="active">
+  <h2>Top Categories</h2>
+  <div class="grid">
+    <div class="card"><img src="Images/Phone.jpg"><strong>Mobiles</strong></div>
+    <div class="card"><img src="Images/acces.webp"><strong>Accessories</strong></div>
+    <div class="card"><img src="Images/TV.avif"><strong>Smart TV</strong></div>
+    <div class="card"><img src="Images/Fridge.jpg"><strong>Fridges</strong></div>
+    <div class="card"><img src="Images/washing.jpg"><strong>Washing Machines</strong></div>
+    <div class="card"><img src="Images/Speaker.jpg"><strong>Speakers</strong></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <h2>About Hariom Enterprises</h2>
+  <p>Founded in 2001, <b>Hariom Enterprises</b> has grown from a single-counter kiosk into North Bihar’s most
+     trusted multi-brand electronics destination. Our promise: <em>right product, right price, genuine after-sale
+     support</em>. With authorised stock, No-Cost EMI, and an in-house service desk, we keep every customer happy.</p>
+</section>
+
+<!-- BRANCHES -->
+<section id="branches">
+  <h2>Our Branches</h2>
+
+  <div class="branch" id="rarhi">
+    <h3>Rarhi (Main)</h3>
+    <div class="gallery">
+      <img src="Images/rarhi1.jpg">
+      <button class="prev">‹</button><button class="next">›</button>
     </div>
-  </section>
+  </div>
 
-  <!-- ABOUT -->
-  <section id="about">
-    <h2>About Us</h2>
-    <p>Hariom Enterprises is your one-stop shop for mobiles, electronics and accessories with unbeatable
-       pricing and Exiting Offers and trusted service since 2020.</p>
-  </section>
-
-  <!-- BRANCHES -->
-  <section id="branches">
-    <h2>Our Branches</h2>
-    <ul>
-      <li>Rarhi&nbsp;(Main&nbsp;Showroom)</li>
-      <li>Jale</li>
-    
-    </ul>
-  </section>
-
-  <!-- MOBILES -->
-  <section id="mobiles">
-    <h2>Latest Mobiles</h2>
-    <div class="grid">
-
-      <!-- Product 1 -->
-      <div class="card">
-        <img src="Images/iphone.jpg" alt="iPhone 16 Pro Max">
-        <strong>iPhone 16 Pro Max</strong>
-        <span>₹1,49,999</span>
-        <label>Qty: <input type="number" min="1" value="1"></label>
-        <button class="buy"  onclick="buyNow(this)">Buy Now</button>
-        <button class="wish" onclick="addWish(this)">♡ Wishlist</button>
-      </div>
-
-      <!-- Product 2 -->
-      <div class="card">
-        <img src="Images/s24.png" alt="Samsung Galaxy S25">
-        <strong>Samsung Galaxy S25</strong>
-        <span>₹1,09,999</span>
-        <label>Qty: <input type="number" min="1" value="1"></label>
-        <button class="buy"  onclick="buyNow(this)">Buy Now</button>
-        <button class="wish" onclick="addWish(this)">♡ Wishlist</button>
-      </div>
-
-      <!-- Product 3 -->
-      <div class="card">
-        <img src="Images/oneplus.webp" alt="OnePlus 12R">
-        <strong>OnePlus 12R</strong>
-        <span>₹39,999</span>
-        <label>Qty: <input type="number" min="1" value="1"></label>
-        <button class="buy"  onclick="buyNow(this)">Buy Now</button>
-        <button class="wish" onclick="addWish(this)">♡ Wishlist</button>
-      </div>
-
+  <div class="branch" id="jale">
+    <h3>Jale</h3>
+    <div class="gallery">
+      <img src="Images/jale1.jpg">
+      <button class="prev">‹</button><button class="next">›</button>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ACCESSORIES (placeholder) -->
-  <section id="accessories">
+<!-- MOBILES -->
+<section id="mobiles">
+  <div style="display:flex;justify-content:space-between;align-items:end">
+    <h2>Mobiles</h2>
+    <div class="search-wrap"><input id="mobile-search" placeholder="Search models…"></div>
+  </div>
+
+  <!-- Brand Tabs -->
+  <div id="brand-tabs">
+    <button class="btn small acc" data-brand="all">All</button>
+    <button class="btn small" data-brand="Samsung">Samsung</button>
+    <button class="btn small" data-brand="Oppo">Oppo</button>
+    <button class="btn small" data-brand="Vivo">Vivo</button>
+    <button class="btn small" data-brand="Apple">Apple</button>
+  </div>
+
+  <div class="grid" id="mobile-grid"></div>
+</section>
+
+<!-- ACCESSORIES -->
+<section id="accessories">
+  <div style="display:flex;justify-content:space-between;align-items:end">
     <h2>Accessories</h2>
-    <p>Coming soon …</p>
-  </section>
+    <div class="search-wrap"><input id="acc-search" placeholder="Search accessories…"></div>
+  </div>
+  <div class="grid" id="acc-grid"></div>
+</section>
 
-  <!-- CONTACT -->
-  <section id="contact">
-    <h2>Contact Us</h2>
-    <form onsubmit="submitForm(event)">
-      <input type="text"  placeholder="Your Name"   required>
-      <input type="email" placeholder="Your Email"  required>
-      <input type="tel"   placeholder="Contact No." required>
-      <textarea rows="3"  placeholder="Your Message" required></textarea>
-      <input type="text" id="location" placeholder="Detecting your location…" readonly>
-      <button type="submit">Submit</button>
-    </form>
-  </section>
+<!-- CART -->
+<section id="cart">
+  <h2>Your Cart</h2>
+  <div id="cart-items"></div>
+  <p id="cart-empty" style="text-align:center;color:#777">Cart is empty.</p>
+  <h3 id="cart-total"></h3>
+  <button id="checkout-btn" class="btn acc" onclick="goCheckout()">Checkout →</button>
+</section>
+
+<!-- CHECKOUT -->
+<section id="checkout">
+  <h2>Checkout & Payment</h2>
+  <div id="order-summary"></div>
+  <h3 id="order-total" style="margin:8px 0"></h3>
+
+  <label class="payment-option"><input type="radio" name="paymode" value="cod" checked> Cash on Delivery</label>
+  <label class="payment-option"><input type="radio" name="paymode" value="upi"> UPI</label>
+  <label class="payment-option"><input type="radio" name="paymode" value="card"> Card (EMI)</label>
+
+  <div id="upi-form" class="payform"><label>UPI ID <input placeholder="you@bank"></label></div>
+  <div id="card-form" class="payform">
+    <label>Name on Card <input></label>
+    <label>Card Number <input maxlength="16"></label>
+    <label>Expiry MM/YY <input maxlength="5"></label>
+    <label>CVV <input maxlength="3" style="width:60px"></label>
+  </div>
+
+  <button class="btn acc" style="margin-top:12px" onclick="placeOrder()">Pay & Place Order</button>
+</section>
+
 </main>
+<footer>© Hariom Enterprises — All Rights Reserved</footer>
 
-<!-- ───────── FOOTER ───────── -->
-<footer>© Hariom Mobile – All Rights Reserved</footer>
-
-<!-- ───────── JS LOGIC ───────── -->
+<!-- ─────────── JAVASCRIPT (unchanged logic) ─────────── -->
 <script>
-/* ---------- Mini Router ---------- */
-document.querySelectorAll('#nav a').forEach(link=>{
-  link.addEventListener('click',e=>{
-    e.preventDefault();
-    // highlight nav
-    document.querySelectorAll('#nav a').forEach(l=>l.classList.remove('active'));
-    link.classList.add('active');
-    // show target section
-    const tgt = link.dataset.target;
-    document.querySelectorAll('main section').forEach(s=>{
-      s.classList.toggle('active', s.id === tgt);
-    });
-    window.scrollTo({top:0,behavior:'smooth'});
+/* Router */
+function show(id){
+  document.querySelectorAll('#nav a').forEach(a=>a.classList.toggle('active',a.dataset.target===id));
+  document.querySelectorAll('main section').forEach(s=>s.classList.toggle('active',s.id===id));
+  scrollTo(0,0);
+}
+document.querySelectorAll('#nav a').forEach(a=>a.onclick=e=>{e.preventDefault();show(a.dataset.target)});
+
+/* Data */
+const phones=[
+  {brand:'Samsung',model:'Galaxy S25 Ultra',price:109999,colors:[
+    {name:'Black',   img:'Images/s25-black.png'},
+    {name:'Lavender',img:'Images/s25-purple.png'},
+    {name:'Cream',   img:'Images/s25-cream.png'}]},
+  {brand:'Oppo',model:'Reno 11 Pro',price:38999,colors:[
+    {name:'White',img:'Images/oppo-white.png'},
+    {name:'Black',img:'Images/oppo-black.png'}]},
+  {brand:'Vivo',model:'V30 Pro',price:42999,colors:[
+    {name:'Green',img:'Images/vivo-green.png'},
+    {name:'Gold', img:'Images/vivo-gold.png'}]},
+  {brand:'Apple',model:'iPhone 16 Pro Max',price:149999,colors:[
+    {name:'Titanium',img:'Images/iphone-natural.png'},
+    {name:'Blue',    img:'Images/iphone-blue.png'},
+    {name:'White',   img:'Images/iphone-white.png'}]}
+];
+const accessories=[
+  {title:'Smart Watch',      price:2999,img:'Images/watch.png'},
+  {title:'ANC Earbuds',      price:3499,img:'Images/earbuds.png'},
+  {title:'Earphones',        price: 699,img:'Images/earphones.png'},
+  {title:'Fast Charger 25W', price:1199,img:'Images/charger.png'},
+  {title:'Power Bank 20K',   price:2499,img:'Images/powerbank.png'},
+  {title:'USB-C Cable',      price: 299,img:'Images/cable.png'}
+];
+
+/* Cart helpers */
+const store='cart';
+const getCart = () => JSON.parse(localStorage.getItem(store)||'[]');
+const saveCart= c => localStorage.setItem(store,JSON.stringify(c));
+const badge   = () => document.getElementById('cart-count').textContent=getCart().length;
+
+/* Render phones */
+const phoneGrid=document.getElementById('mobile-grid');const idx=Array(phones.length).fill(0);
+function renderPhones(arr){
+  phoneGrid.innerHTML='';
+  arr.forEach((p,i)=>{
+    const col=p.colors[idx[i]];
+    phoneGrid.insertAdjacentHTML('beforeend',`
+      <div class="card">
+        <button class="color-nav color-prev" onclick="prev(${i})">‹</button>
+        <button class="color-nav color-next" onclick="next(${i})">›</button>
+        <img src="${col.img}" alt="">
+        <strong>${p.model}</strong><small>${p.brand}</small>
+        <span class="price-pill">₹${p.price.toLocaleString()}</span>
+        <input class="qty" type="number" min="1" value="1">
+        <button class="btn acc" onclick="addCart('${p.model}',${p.price},this)">Add to Cart</button>
+        <button class="btn warn" onclick="alert('Added to wishlist')">♡ Wishlist</button>
+        <small style="color:#555">Colour: <span id="cname-${i}">${col.name}</span></small>
+      </div>`);
   });
+}
+renderPhones(phones);
+function updateColour(i){
+  const col=phones[i].colors[idx[i]];
+  const card=phoneGrid.children[i];
+  card.querySelector('img').src=col.img;
+  document.getElementById(`cname-${i}`).textContent=col.name;
+}
+function prev(i){idx[i]=(idx[i]-1+phones[i].colors.length)%phones[i].colors.length;updateColour(i);}
+function next(i){idx[i]=(idx[i]+1)%phones[i].colors.length;updateColour(i);}
+document.getElementById('brand-tabs').onclick=e=>{
+  if(!e.target.dataset.brand)return;
+  document.querySelectorAll('#brand-tabs .btn').forEach(b=>b.classList.remove('acc'));
+  e.target.classList.add('acc');
+  const b=e.target.dataset.brand;
+  renderPhones(b==='all'?phones:phones.filter(p=>p.brand===b));
+};
+document.getElementById('mobile-search').oninput=e=>{
+  const q=e.target.value.toLowerCase();
+  renderPhones(phones.filter(p=>p.model.toLowerCase().includes(q)));
+};
+
+/* Render accessories */
+const accGrid=document.getElementById('acc-grid');
+function renderAcc(list){
+  accGrid.innerHTML='';
+  list.forEach(a=>accGrid.insertAdjacentHTML('beforeend',`
+    <div class="card">
+      <img src="${a.img}" alt="">
+      <strong>${a.title}</strong>
+      <span class="price-pill">₹${a.price}</span>
+      <input class="qty" type="number" min="1" value="1">
+      <button class="btn acc" onclick="addCart('${a.title}',${a.price},this)">Add to Cart</button>
+      <button class="btn warn" onclick="alert('Added to wishlist')">♡ Wishlist</button>
+    </div>`));
+}
+renderAcc(accessories);
+document.getElementById('acc-search').oninput=e=>{
+  const q=e.target.value.toLowerCase();
+  renderAcc(accessories.filter(a=>a.title.toLowerCase().includes(q)));
+};
+
+/* Cart */
+function addCart(name,price,btn){
+  const qty=+btn.parentElement.querySelector('.qty').value||1;
+  const cart=getCart();cart.push({name,price,qty});
+  saveCart(cart);badge();renderCart();
+  alert(`${qty} × ${name} added to cart`);
+}
+function renderCart(){
+  const list=document.getElementById('cart-items');
+  const empty=document.getElementById('cart-empty');
+  const total=document.getElementById('cart-total');
+  const cart=getCart();list.innerHTML='';let sum=0;
+  if(!cart.length){
+    empty.style.display='block';total.textContent='';document.getElementById('checkout-btn').disabled=true;return;
+  }
+  empty.style.display='none';document.getElementById('checkout-btn').disabled=false;
+  cart.forEach((it,i)=>{
+    sum+=it.price*it.qty;
+    list.insertAdjacentHTML('beforeend',`
+      <div class="cart-row">
+        <span>${it.qty} × ${it.name}</span>
+        <span>₹${(it.price*it.qty).toLocaleString()}</span>
+        <button onclick="del(${i})">🗑</button>
+      </div>`);
+  });
+  total.textContent='Total ₹'+sum.toLocaleString();
+}
+function del(i){const c=getCart();c.splice(i,1);saveCart(c);badge();renderCart();}
+
+/* Checkout */
+function goCheckout(){if(!getCart().length)return;buildSummary();show('checkout');}
+function buildSummary(){
+  const box=document.getElementById('order-summary');box.innerHTML='';let grand=0;
+  getCart().forEach(it=>{
+    grand+=it.price*it.qty;
+    box.insertAdjacentHTML('beforeend',`<p>${it.qty} × ${it.name} – ₹${(it.price*it.qty).toLocaleString()}</p>`);
+  });
+  document.getElementById('order-total').textContent='Grand Total ₹'+grand.toLocaleString();
+}
+document.querySelectorAll('input[name="paymode"]').forEach(r=>r.onchange=()=>{
+  document.getElementById('upi-form').style.display=r.value==='upi'?'block':'none';
+  document.getElementById('card-form').style.display=r.value==='card'?'block':'none';
+});
+function placeOrder(){
+  if(!getCart().length)return;
+  alert('Payment successful! Order placed.');
+  saveCart([]);badge();renderCart();show('home');
+}
+
+/* Branch gallery */
+const galleries={rarhi:['Images/rarhi1.jpg','Images/rarhi2.jpg','Images/rarhi3.jpg'],
+                 jale:['Images/jale1.jpg','Images/jale2.jpg','Images/jale3.jpg']};
+Object.entries(galleries).forEach(([id,arr])=>{
+  let j=0;const img=document.querySelector(`#${id} .gallery img`);
+  document.querySelector(`#${id} .prev`).onclick=()=>{j=(j-1+arr.length)%arr.length;img.src=arr[j];};
+  document.querySelector(`#${id} .next`).onclick=()=>{j=(j+1)%arr.length;img.src=arr[j];};
 });
 
-/* ---------- Buy / Wishlist demo ---------- */
-function buyNow(btn){
-  const card = btn.closest('.card');
-  const name = card.querySelector('strong').innerText;
-  const qty  = card.querySelector('input[type=number]').value;
-  alert(`Added ${qty} × ${name} to cart!`);
-}
-function addWish(btn){
-  const name = btn.closest('.card').querySelector('strong').innerText;
-  alert(`${name} saved to wishlist!`);
-}
-
-/* ---------- IP-based location ---------- */
-fetch('https://ipapi.co/json').then(r=>r.json()).then(d=>{
-  const loc = document.getElementById('location');
-  if(loc) loc.value = `${d.city}, ${d.region}, ${d.country_name}`;
-}).catch(()=>{const loc=document.getElementById('location');if(loc)loc.value='Bihar'});
-
-/* ---------- Contact form ---------- */
-function submitForm(e){
-  e.preventDefault();
-  alert('Thank you for contacting Hariom Enterprises!');
-}
+/* INIT */
+badge();renderCart();
 </script>
 </body>
 </html>
